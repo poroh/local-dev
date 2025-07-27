@@ -3,6 +3,11 @@
 # Local development modules
 #
 
+ifndef ldv-mod..included
+ldv-mod..included := 1
+
+include $(ldv-root)/ldv-debug.mk
+
 # ================================================================================
 # Interface
 
@@ -24,6 +29,8 @@ define ldv-mod--define-vars
 endef
 
 define ldv-mod--define-rules
-  $(info Define rules of $1)
+  $(call ldv-debug.f-info,ldv-mod: define rules of $1)
   $($(ldv-mod--rules-$1))
 endef
+
+endif

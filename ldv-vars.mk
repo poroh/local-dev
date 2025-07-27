@@ -18,6 +18,7 @@ ldv-vars.f-clear = $(foreach v,$1,$(eval undefine $v))
 define ldv-vars..f-store-one
 $(eval
   ifdef $2
+    $$(info store var $2 for $1)
     ldv-vars..stored-var.$1.$2 := $$($$2)
   endif
 )
@@ -26,7 +27,8 @@ endef
 define ldv-vars..f-restore-one
 $(eval
   ifdef ldv-vars..stored-var.$1.$2
-    $($2) := $$(ldv-vars..stored-var.$1.$2)
+    $$(info restore var $2 to for $1 $$(ldv-vars..stored-var.$1.$2))
+    $2 := $$(ldv-vars..stored-var.$1.$2)
     undefine ldv-vars..stored-var.$1.$2
   endif
 )

@@ -10,12 +10,12 @@ ldv-base-path := _build/test-ldv-dep
 include $(ldv-root)/ldv-dep.mk
 include $(ldv-root)/ldv-bin.mk
 
-$(call ldv-bin.f-required,rm)
+$(eval $(call ldv-bin.f-required,rm))
 
-$(call ldv-dep.f-define,i1,i1-v1,)
-$(call ldv-dep.f-define,i2,i2-v3,)
+$(eval $(call ldv-dep.f-define,i1,i1-v1,))
+$(eval $(call ldv-dep.f-define,i2,i2-v3,))
 
-$(call ldv-dep.f-define,test-target,,i1 i2)
+$(eval $(call ldv-dep.f-define,test-target,,i1 i2))
 
 $(call ldv-bin.f-seal)
 

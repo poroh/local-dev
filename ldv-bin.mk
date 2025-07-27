@@ -7,8 +7,9 @@ ifndef ldv-bin..included
 ldv-bin..included := 1
 
 include $(ldv-root)/ldv-vars.mk
+include $(ldv-root)/ldv-debug.mk
 
-$(if $(shell which -v),,$(error which must be installed))
+$(if $(shell which $(SHELL)),,$(error which must be installed))
 
 # ================================================================================
 # Interface
@@ -39,7 +40,7 @@ endef
 $(call ldv-bin.f-required,bash)
 
 define ldv-bin..seal
-  $(info Executable are sealed. No more execs from PATH)
+  $(call ldv-debug.f-info,ldv-bin: executable are sealed. No more execs from PATH)
   export PATH :=
   export SHELL := $(call ldv-bin.f-exec,bash)
 endef
