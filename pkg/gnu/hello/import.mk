@@ -22,7 +22,8 @@ define gnu-hello-descr
   .deps      := $(call gnu-sed.f-pkg)
   .makefile  := pkg/gnu/hello/build.mk
   .build-sandbox := expr rm ls mv cp mkdir touch cat sort chmod \
-                    tr awk uniq grep uname sleep make cc ld ar bash basename rmdir ln
+                    tr awk uniq grep uname sleep make cc ld ar as \
+                    bash basename rmdir ln
   .env-path  := bin
 endef
 

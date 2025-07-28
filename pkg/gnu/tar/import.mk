@@ -23,8 +23,8 @@ define gnu-tar-descr
   .deps      := $(call gnu-sed.f-pkg) $(call gnu-libiconv.f-pkg)
   .makefile  := pkg/gnu/tar/build.mk
   .makefile-vars := libiconv-prefix=$(call gnu-libiconv.f-prefix)
-  .build-sandbox := bash ln expr chmod rm ls sort printf cat cc \
-                    grep mv uname mkdir cp touch tr awk id make ar ld \
+  .build-sandbox := bash ln expr chmod rm ls sort printf cat cc as ar ld \
+                    grep mv uname mkdir cp touch tr awk id make  \
                     sleep uniq hexdump wc basename
   .env-path  := bin
 endef

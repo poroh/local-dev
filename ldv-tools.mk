@@ -17,11 +17,17 @@ ldv-tools-pwd := $(shell pwd)
 ldv-tools-next-cmd = $(ldv-tools--newline)$(ldv-tools--indent)
 ldv-tools-chr-sp = $(ldv-tools--empty) $(ldv-tools--empty)
 
+# intcmp (in future make it will be a function):
+ldv-tool.f-intcmp = $(shell \
+  if [ $(1) -lt $(2) ]; then echo '$3'; \
+  elif [ $(1) -eq $(2) ]; then echo '$4'; \
+  else echo $5; fi \
+)
+
 # Make version
-$(if $(intcmp 3,4,lt,,),,$(error Your version of make must be at least 4.4. Your version $(MAKE_VERSION)))
 ldv-tools-make-major := $(firstword $(subst ., ,$(MAKE_VERSION)))
 ldv-tools-make-minor := $(word 2,$(subst ., ,$(MAKE_VERSION)))
-ldv-tools.f-require-make-version = $(if $(intcmp $(ldv-tools-make-major),$1,no-go,$(intcmp $(ldv-tools-make-minor),$2,no-go,,),),$(error make is too old $(MAKE_VERSION) < $1.$2))
+ldv-tools.f-require-make-version = $(if $(call ldv-tools.f-intcmp,$(ldv-tools-make-major),$1,no-go,$(call ldv-tools.f-intcmp,$(ldv-tools-make-minor),$2,no-go,,),),$(error make is too old $(MAKE_VERSION) < $1.$2))
 
 # Join strings
 # $1 - sep

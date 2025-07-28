@@ -20,7 +20,8 @@ define gnu-sed-descr
   .deps      :=
   .makefile  := pkg/gnu/sed/build.mk
   .build-sandbox := sed expr rm ls mv cp mkdir touch cat sort chmod \
-                    tr awk uniq grep uname sleep make cc ld ar bash basename rmdir ln
+                    tr awk uniq grep uname sleep make cc as ld ar bash \
+                    basename rmdir ln
   .env-path  := bin
 endef
 
