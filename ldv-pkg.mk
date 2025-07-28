@@ -86,7 +86,7 @@ ldv-pkg.f-prefix = $(ldv-tools-pwd)/$(call ldv-pkg..f-dir,$1)/install$(call ldv-
 # ================================================================================
 # Implementation
 
-$(call ldv-sandbox.f-define,ldv-pkg..extract-gnu,tar gzip)
+$(call ldv-sandbox.f-define,ldv-pkg..extract-tar-gz,tar gzip)
 
 # All defined packages
 ldv-pkg..all-pkgs :=
@@ -98,7 +98,13 @@ ldv-pkg..f-dir = $(ldv-pkg.base-path)/$1-$(call ldv-dep.f-sha,ldv-pkg..dep-$1)
 ldv-pkg..fetch-methods-gnu := curl
 ldv-pkg..fetch-target-ext-gnu = tar.gz
 ldv-pkg..f-fetch-source-gnu = https://ftp.gnu.org/gnu/$1/$1-$2.$(ldv-pkg..fetch-target-ext-gnu)
-ldv-pkg..f-extract-gnu = $(call ldv-sandbox.f-env,ldv-pkg..extract-gnu)tar zxf $(call ldv-fetch.f-name,ldv-pkg..download@$1) -C $(call ldv-pkg..f-dir,$1)/src --strip-components=1  
+ldv-pkg..f-extract-gnu = $(call ldv-sandbox.f-env,ldv-pkg..extract-tar-gz)tar zxf $(call ldv-fetch.f-name,ldv-pkg..download@$1) -C $(call ldv-pkg..f-dir,$1)/src --strip-components=1  
+
+ldv-pkg..fetch-methods-github := curl
+ldv-pkg..fetch-target-ext-github = tar.gz
+ldv-pkg..f-fetch-source-github = https://github.com/$1/archive/refs/tags/$2.$(ldv-pkg..fetch-target-ext-github)
+ldv-pkg..f-extract-github = $(call ldv-sandbox.f-env,ldv-pkg..extract-tar-gz)tar zxf $(call ldv-fetch.f-name,ldv-pkg..download@$1) -C $(call ldv-pkg..f-dir,$1)/src --strip-components=1  
+
 ldv-pkg..f-rules = $(foreach s,$(ldv-pkg..all-pkgs),$(eval $(call ldv-pkg..f-one-rule,$(s))))
 
 define ldv-pkg..f-one-rule

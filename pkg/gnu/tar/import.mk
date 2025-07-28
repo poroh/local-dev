@@ -31,7 +31,7 @@ endef
 
 $(call ldv-pkg-f-define,gnu-tar-descr)
 
-gnu-tar.f-exec = $(call ldv-pkg.f-prefix,gnu-tar-$(if $1,$1,$(gnu-tar-default-version)))/bin/tar
-gnu-tar.f-path = $(call ldv-pkg.f-prefix,gnu-tar-$(if $1,$1,$(gnu-tar-default-version)))/bin
+gnu-tar.f-exec = $(call ldv-pkg.f-prefix,gnu-tar-$(if $1,$1,$(gnu-tar-version)))/bin/tar
+gnu-tar.f-path = $(call ldv-pkg.f-prefix,gnu-tar-$(if $1,$1,$(gnu-tar-version)))/bin
 
 endif

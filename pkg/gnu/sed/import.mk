@@ -24,9 +24,9 @@ define gnu-sed-descr
   .env-path  := bin
 endef
 
-gnu-sed.f-pkg = gnu-sed-$(if $1,$1,$(gnu-sed-default-version))
-gnu-sed.f-exec = $(call ldv-pkg.f-prefix,gnu-sed-$(if $1,$1,$(gnu-sed-default-version)))/bin/sed
-gnu-sed.f-path = $(call ldv-pkg.f-prefix,gnu-sed-$(if $1,$1,$(gnu-sed-default-version)))/bin
+gnu-sed.f-pkg = gnu-sed-$(if $1,$1,$(gnu-sed-version))
+gnu-sed.f-exec = $(call ldv-pkg.f-prefix,gnu-sed-$(if $1,$1,$(gnu-sed-version)))/bin/sed
+gnu-sed.f-path = $(call ldv-pkg.f-prefix,gnu-sed-$(if $1,$1,$(gnu-sed-version)))/bin
 
 $(call ldv-pkg-f-define,gnu-sed-descr)
 

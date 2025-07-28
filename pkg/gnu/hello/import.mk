@@ -28,7 +28,7 @@ endef
 
 $(call ldv-pkg-f-define,gnu-hello-descr)
 
-gnu-hello.f-exec = $(call ldv-pkg.f-prefix,gnu-hello-$(if $1,$1,$(gnu-hello-default-version)))/bin/hello
-gnu-hello.f-path = $(call ldv-pkg.f-prefix,gnu-hello-$(if $1,$1,$(gnu-hello-default-version)))/bin
+gnu-hello.f-exec = $(call ldv-pkg.f-prefix,gnu-hello-$(if $1,$1,$(gnu-hello-version)))/bin/hello
+gnu-hello.f-path = $(call ldv-pkg.f-prefix,gnu-hello-$(if $1,$1,$(gnu-hello-version)))/bin
 
 endif

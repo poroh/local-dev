@@ -29,7 +29,7 @@ endef
 
 $(call ldv-pkg-f-define,gnu-libiconv-descr)
 
-gnu-libiconv.f-pkg = gnu-libiconv-$(if $1,$1,$(gnu-libiconv-default-version))
-gnu-libiconv.f-prefix = $(call ldv-pkg.f-prefix,$(call gnu-libiconv.f-pkg,$(if $1,$1,$(gnu-libiconv-default-version))))
+gnu-libiconv.f-pkg = gnu-libiconv-$(if $1,$1,$(gnu-libiconv-version))
+gnu-libiconv.f-prefix = $(call ldv-pkg.f-prefix,$(call gnu-libiconv.f-pkg,$(if $1,$1,$(gnu-libiconv-version))))
 
 endif
