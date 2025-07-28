@@ -79,7 +79,7 @@ ldv-pkg..all-pkgs :=
 
 ldv-pkg..all-vars := .name .version .repo-type .repo-name .deps .makefile .build-sandbox
 
-ldv-pkg..f-dir = $(ldv-pkg.base-path)/$1-$(call ldv-dep.f-sha,ldv-pkg..dep-$1)
+ldv-pkg..f-dir = $(ldv-pkg.base-path)/$1-$(ldv-pkg..vars.version@$1)-$(call ldv-dep.f-sha,ldv-pkg..dep-$1)
 
 ldv-pkg..fetch-methods-gnu := curl
 ldv-pkg..fetch-target-ext-gnu = tar.gz

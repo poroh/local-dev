@@ -6,10 +6,13 @@
 ifndef ldv-bin..included
 ldv-bin..included := 1
 
+include $(ldv-root)/ldv-tools.mk
 include $(ldv-root)/ldv-vars.mk
 include $(ldv-root)/ldv-debug.mk
 
 $(if $(shell which $(SHELL)),,$(error which must be installed))
+
+$(call ldv-tools.f-require-make-version,4,0)
 
 # ================================================================================
 # Interface

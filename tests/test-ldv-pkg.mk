@@ -21,7 +21,7 @@ define hello-world-descr
   .repo-name := hello
   .deps      :=
   .makefile  := test-ldv-pkg.hello-world.mk
-  .build-sandbox := sed expr rm ls mv cp mkdir touch cat sort chmod tr awk uniq grep uname sleep make cc ld
+  .build-sandbox := sed expr rm ls mv cp mkdir touch cat sort chmod tr awk uniq grep uname sleep make cc ld ar bash basename rmdir
 endef
 
 $(eval $(call ldv-pkg-f-define,hello-world-descr))
