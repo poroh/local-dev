@@ -26,7 +26,7 @@ define gnu-gettext-descr
   .build-sandbox := bash expr chmod rm ls cat sort mkdir \
                     date uname grep awk tr mv make basename cp find \
                     cc rmdir id touch xargs ln wc uniq ar nm sh gzip \
-                    tar dirname
+                    tar dirname cmp
   .env-path  := bin
 endef
 

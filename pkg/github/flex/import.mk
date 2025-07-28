@@ -22,6 +22,8 @@ include $(ldv-root)/pkg/gnu/gettext/import.mk
 include $(ldv-root)/pkg/gnu/m4/import.mk
 include $(ldv-root)/pkg/gnu/sed/import.mk
 include $(ldv-root)/pkg/gnu/bison/import.mk
+include $(ldv-root)/pkg/gnu/texinfo/import.mk
+include $(ldv-root)/pkg/gnu/help2man/import.mk
 
 define flex-descr
   .name      := flex-$(flex-version)
@@ -31,12 +33,15 @@ define flex-descr
   .deps      := $(call gnu-libtool.f-pkg) $(call gnu-autoconf.f-pkg) \
                 $(call gnu-automake.f-pkg) $(call gnu-gettext.f-pkg) \
                 $(call gnu-m4.f-pkg) $(call gnu-sed.f-pkg) \
-                $(call gnu-bison.f-pkg)
+                $(call gnu-bison.f-pkg) $(call gnu-texinfo.f-pkg) \
+                $(call gnu-help2man.f-pkg)
   .makefile  := pkg/github/flex/build.mk
   .makefile-vars := autoconf-bin=$(call gnu-autoconf.f-exec) automake-bin=$(call gnu-automake.f-exec)
+  # TODO: get rid of flex from deps
   .build-sandbox := bash sh env which ln date cat touch grep wc \
-                    mkdir gzip tar find rm mv sort cp expr chmod ls cc \
-                    uname awk make
+                    mkdir gzip tar find rm rmdir mv sort cp expr chmod ls cc \
+                    uname awk make tr ar cmp id dirname basename xargs head \
+                    flex
   .env-path  := bin
 endef
 

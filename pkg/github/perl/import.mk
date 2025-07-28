@@ -20,6 +20,7 @@ define perl-descr
   .deps      := 
   .makefile  := pkg/github/perl/build.mk
   .makefile-vars :=
+  # TODO: get rid of install_name_tool from deps
   .build-sandbox := bash sh cat rm uname cc make sed touch chmod cp mv grep ranlib \
                     mkdir install_name_tool
   .env-path  := bin

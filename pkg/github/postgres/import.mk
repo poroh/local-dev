@@ -14,13 +14,15 @@ include $(ldv-root)/ldv-bin.mk
 
 include $(ldv-root)/pkg/gnu/bison/import.mk
 include $(ldv-root)/pkg/github/flex/import.mk
+include $(ldv-root)/pkg/github/perl/import.mk
 
 define postgres-descr
   .name      := postgres-$(postgres-version)
   .version   := $(postgres-version)
   .repo-type := github
   .repo-name := postgres/postgres
-  .deps      := $(call gnu-bison.f-pkg) $(call flex.f-pkg)
+  .deps      := $(call gnu-bison.f-pkg) $(call flex.f-pkg) \
+                $(call perl.f-pkg)
   .makefile  := pkg/github/postgres/build.mk
   .build-sandbox := bash sed expr rm ls cat sort uname cc grep mv \
                     awk
