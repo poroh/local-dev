@@ -23,6 +23,11 @@ ldv-tools-make-major := $(firstword $(subst ., ,$(MAKE_VERSION)))
 ldv-tools-make-minor := $(word 2,$(subst ., ,$(MAKE_VERSION)))
 ldv-tools.f-require-make-version = $(if $(intcmp $(ldv-tools-make-major),$1,no-go,$(intcmp $(ldv-tools-make-minor),$2,no-go,,),),$(error make is too old $(MAKE_VERSION) < $1.$2))
 
+# Join strings
+# $1 - sep
+# $2 - list of strings
+ldv-tooks.f-join = $(subst $(ldv-tools-chr-sp),$1,$(strip $2))
+
 # ================================================================================
 # Implementation
 #

@@ -20,15 +20,16 @@ define ldv-sandbox.f-define
 endef
 
 define ldv-sandbox..f-define-dep
-  $(foreach bin,$2,$(call ldv-bin.f-required,$(bin)))
-  $(call ldv-dep.f-define,ldv-sandbox..dep-$1,$2,)
+  $(eval $(foreach bin,$2,$(call ldv-bin.f-required,$(bin))))
+  $(eval $(call ldv-dep.f-define,ldv-sandbox..dep-$1,$(foreach bin,$2,$(call ldv-bin.f-exec,$(bin))),))
   ldv-sandbox..bins-$1 = $2
   ldv-sandbox..all += $1
 endef
 
 ldv-sandbox.f-dep = ldv-sandbox..dep-$1
 ldv-sandbox.f-prereq = $(call ldv-dep.f-target,ldv-sandbox..dep-$1)
-ldv-sandbox.f-env = PATH=$(ldv-tools-pwd)/$(call ldv-sandbox..f-root,$1)$(ldv-tools-chr-sp)
+ldv-sandbox.f-env = PATH=$(call ldv-sandbox.f-path,$1)$(ldv-tools-chr-sp)
+ldv-sandbox.f-path = $(ldv-tools-pwd)/$(call ldv-sandbox..f-root,$1)
 
 # ================================================================================
 # Implementation
@@ -43,6 +44,7 @@ ldv-sandbox..f-rules = $(foreach s,$(ldv-sandbox..all),$(eval $(call ldv-sandbox
 
 define ldv-sandbox..f-one-rule
 $(call ldv-dep.f-target,ldv-sandbox..dep-$1): $(call ldv-dep.f-prereq,ldv-sandbox..dep-$1)
+	$(call ldv-bin.f-exec,rm) -rf $(call ldv-sandbox..f-root,$1)
 	$(call ldv-bin.f-exec,mkdir) -p $(call ldv-sandbox..f-root,$1)
 	$(foreach b,$(ldv-sandbox..bins-$1),$(call ldv-sandbox..f-create-link,$1,$b)$(ldv-tools-next-cmd))
 	$(call ldv-dep.f-touch,$$@)
