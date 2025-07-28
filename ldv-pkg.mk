@@ -69,6 +69,8 @@ define ldv-pkg-f-define
     $(call ldv-vars.f-restore,ldv-pkg,$(ldv-pkg..all-vars)))
 endef # ldv-pkg-f-define
 
+ldv-pkg.f-prefix = $(ldv-tools-pwd)/$(call ldv-pkg..f-dir,$1)/install$(call ldv-vars.f-must-not-empty,ldv-pkg..vars.name@$1,Package $1 is not defined)
+
 # ================================================================================
 # Implementation
 
@@ -79,7 +81,7 @@ ldv-pkg..all-pkgs :=
 
 ldv-pkg..all-vars := .name .version .repo-type .repo-name .deps .makefile .build-sandbox
 
-ldv-pkg..f-dir = $(ldv-pkg.base-path)/$1-$(ldv-pkg..vars.version@$1)-$(call ldv-dep.f-sha,ldv-pkg..dep-$1)
+ldv-pkg..f-dir = $(ldv-pkg.base-path)/$1-$(call ldv-dep.f-sha,ldv-pkg..dep-$1)
 
 ldv-pkg..fetch-methods-gnu := curl
 ldv-pkg..fetch-target-ext-gnu = tar.gz
@@ -93,9 +95,9 @@ $(call ldv-debug.f-info,ldv-pkg: define package $1 rules)
 $(call ldv-dep.f-target,ldv-pkg..dep-$1): $(call ldv-dep.f-prereq,ldv-pkg..dep-$1)
 	$(call ldv-bin.f-exec,rm) -rf $(call ldv-pkg..f-dir,$1)
 	$(call ldv-bin.f-exec,mkdir) -p $(call ldv-pkg..f-dir,$1)/src
-	$(call ldv-bin.f-exec,mkdir) -p $(call ldv-pkg..f-dir,$1)/install
+	$(call ldv-bin.f-exec,mkdir) -p $(call ldv-pkg.f-prefix,$1)
 	$(call ldv-pkg..f-extract-$(ldv-pkg..vars.repo-type@$1),$1)
-	$(ldv-pkg..build-env@$(.name))$(call ldv-bin.f-exec,make) -f $(ldv-tools-pwd)/$(ldv-pkg..vars.makefile@$1) -C $(call ldv-pkg..f-dir,$1)/src ldv-install-prefix=$(ldv-tools-pwd)/$(call ldv-pkg..f-dir,$1)/install
+	$(ldv-pkg..build-env@$(.name))$(call ldv-bin.f-exec,make) -f $(ldv-root)/$(ldv-pkg..vars.makefile@$1) -C $(call ldv-pkg..f-dir,$1)/src ldv-install-prefix=$(call ldv-pkg.f-prefix,$1)
 	$(call ldv-dep.f-touch,$$@)
 
 endef
