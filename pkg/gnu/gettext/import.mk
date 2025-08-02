@@ -15,13 +15,24 @@ include $(ldv-root)/ldv-bin.mk
 include $(ldv-root)/pkg/gnu/sed/import.mk
 include $(ldv-root)/pkg/gnu/libiconv/import.mk
 
+gnu-gettext.configure-flags ?= \
+    CFLAGS="-O2 -I$(call gnu-libiconv.f-prefix)/include" \
+    LDFLAGS="-L$(call gnu-libiconv.f-prefix)/lib -liconv" \
+    --disable-dependency-tracking  \
+    --disable-silent-rules \
+    --without-emacs \
+    --disable-modula2 \
+    --enable-fast-install \
+    --disable-d \
+    --disable-java
+
 define gnu-gettext-descr
   .name      := gnu-gettext-$(gnu-gettext-version)
   .version   := $(gnu-gettext-version)
   .repo-type := gnu
   .repo-name := gettext
   .deps      := $(call gnu-sed.f-pkg) $(call gnu-libiconv.f-pkg)
-  .makefile  := pkg/gnu/gettext/build.mk
+  .makefile  := build/configure-build.mk
   .makefile-vars := libiconv-prefix=$(call gnu-libiconv.f-prefix)
   .build-sandbox := bash expr chmod rm ls cat sort mkdir \
                     date uname grep awk tr mv make basename cp find \

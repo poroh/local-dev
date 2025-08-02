@@ -8,7 +8,9 @@
 
 export SHELL=bash
 
+make-env ?=
+
 build:
 	./configure --prefix $(ldv-install-prefix) $(configure-flags)
-	make
+	$(make-env)make
 	make install

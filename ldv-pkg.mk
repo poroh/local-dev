@@ -49,7 +49,7 @@ define ldv-pkg-f-define
     # Define fetch method
     define ldv-pkg..download@$(.name)
        .name := ldv-pkg..download@$(.name)
-       .method := $(ldv-pkg..fetch-methods-$(.repo-type))
+       .method := $(call ldv-vars.f-get,ldv-pkg..fetch-methods-$(.repo-type),Unknown repo type $(.repo-type))
        .source := $(call ldv-pkg..f-fetch-source-$(.repo-type),$(.repo-name),$(.version))
        .target-ext := $(ldv-pkg..fetch-target-ext-$(.repo-type))
     endef
@@ -99,6 +99,11 @@ ldv-pkg..fetch-methods-gnu := curl
 ldv-pkg..fetch-target-ext-gnu = tar.gz
 ldv-pkg..f-fetch-source-gnu = https://ftp.gnu.org/gnu/$1/$1-$2.$(ldv-pkg..fetch-target-ext-gnu)
 ldv-pkg..f-extract-gnu = $(call ldv-sandbox.f-env,ldv-pkg..extract-tar-gz)tar zxf $(call ldv-fetch.f-name,ldv-pkg..download@$1) -C $(call ldv-pkg..f-dir,$1)/src --strip-components=1  
+
+ldv-pkg..fetch-methods-curl-tar-gz := curl
+ldv-pkg..fetch-target-ext-curl-tar-gz = tar.gz
+ldv-pkg..f-fetch-source-curl-tar-gz = $1
+ldv-pkg..f-extract-curl-tar-gz = $(call ldv-sandbox.f-env,ldv-pkg..extract-tar-gz)tar zxf $(call ldv-fetch.f-name,ldv-pkg..download@$1) -C $(call ldv-pkg..f-dir,$1)/src --strip-components=1  
 
 ldv-pkg..fetch-methods-github := curl
 ldv-pkg..fetch-target-ext-github = tar.gz

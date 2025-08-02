@@ -4,9 +4,9 @@
 #
 
 tests:
-#	make -r -R -f ./test-ldv-dep.mk
-#	make -r -R -f ./test-ldv-sandbox.mk
-#	make -r -R -f ./test-ldv-pkg.mk
+	make -r -R -f ./test-ldv-dep.mk
+	make -r -R -f ./test-ldv-sandbox.mk
+	make -r -R -f ./test-ldv-pkg.mk
 	make -r -R -f ./test-pkg-postgres.mk
 
 clean:
