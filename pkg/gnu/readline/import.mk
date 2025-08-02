@@ -30,7 +30,7 @@ define gnu-readline-descr
   .repo-name := readline
   .deps      := $(call gnu-ncurses.f-pkg)
   .makefile  := build/configure-build.mk
-  .makefile-vars := configure-flags='$(gnu-readline.configure-flags)' make-env='$(gnu-readline.make-env)'
+  .makefile-vars := configure-flags='$(gnu-readline.configure-flags)' make-env='$(gnu-readline.make-env) '
   .build-sandbox := bash expr chmod rm ls cat make sort sed \
                     xargs echo mkdir date uname cc mv grep awk \
                     tr wc cp ar sleep rmdir env ln find ld basename \
