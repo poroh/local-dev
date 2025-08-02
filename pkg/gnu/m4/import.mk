@@ -14,14 +14,17 @@ include $(ldv-root)/ldv-bin.mk
 
 include $(ldv-root)/pkg/gnu/sed/import.mk
 
+gnu-m4.configure-flags ?= \
+    CFLAGS="-O3"
+
 define gnu-m4-descr
   .name      := gnu-m4-$(gnu-m4-version)
   .version   := $(gnu-m4-version)
   .repo-type := gnu
   .repo-name := m4
   .deps      := $(call gnu-sed.f-pkg)
-  .makefile  := pkg/gnu/m4/build.mk
-  .makefile-vars :=
+  .makefile  := build/configure-build.mk
+  .makefile-vars := configure-flags='$(gnu-m4.configure-flags)'
   .build-sandbox := bash expr chmod rm ls sort cat printf \
                     cc mv grep cp mkdir sleep date uname make \
                     tr touch wc uniq awk xargs ln ar cmp basename

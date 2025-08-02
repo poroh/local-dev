@@ -14,13 +14,18 @@ include $(ldv-root)/ldv-bin.mk
 
 include $(ldv-root)/pkg/github/perl/import.mk
 
+gnu-texinfo.configure-flags ?= \
+   CFLAGS="-O2" \
+   --disable-dependency-tracking
+
 define gnu-texinfo-descr
   .name      := gnu-texinfo-$(gnu-texinfo-version)
   .version   := $(gnu-texinfo-version)
   .repo-type := gnu
   .repo-name := texinfo
   .deps      :=  $(call perl.f-pkg)
-  .makefile  := pkg/gnu/texinfo/build.mk
+  .makefile  := build/configure-build.mk
+  .makefile-vars := configure-flags='$(gnu-texinfo.configure-flags)'
   .build-sandbox := sed expr rm ls mv cp mkdir touch cat sort chmod \
                     tr awk uniq grep uname sleep make cc ld ar bash \
                     basename rmdir ln id xargs wc dirname

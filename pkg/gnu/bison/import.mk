@@ -15,14 +15,17 @@ include $(ldv-root)/ldv-bin.mk
 include $(ldv-root)/pkg/gnu/sed/import.mk
 include $(ldv-root)/pkg/gnu/m4/import.mk
 
+gnu-bison.configure-flags ?= \
+   CFLAGS="-O2"
+
 define gnu-bison-descr
   .name      := gnu-bison-$(gnu-bison-version)
   .version   := $(gnu-bison-version)
   .repo-type := gnu
   .repo-name := bison
   .deps      := $(call gnu-sed.f-pkg) $(call gnu-m4.f-pkg)
-  .makefile  := pkg/gnu/bison/build.mk
-  .makefile-vars :=
+  .makefile  := build/configure-build.mk
+  .makefile-vars := configure-flags='$(gnu-bison.configure-flags)'
   .build-sandbox := bash expr chmod rm ls sort cat printf \
                     cc mv grep cp mkdir sleep date uname \
                     tr touch awk uniq make env ar ln cmp basename

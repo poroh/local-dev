@@ -12,13 +12,17 @@ gnu-sed..included-$(gnu-sed-version) := 1
 include $(ldv-root)/ldv-pkg.mk
 include $(ldv-root)/ldv-bin.mk
 
+gnu-sed.configure-flags ?= \
+   CFLAGS="-O2"
+
 define gnu-sed-descr
   .name      := $(call gnu-sed.f-pkg,$(gnu-sed-version))
   .version   := $(gnu-sed-version)
   .repo-type := gnu
   .repo-name := sed
   .deps      :=
-  .makefile  := pkg/gnu/sed/build.mk
+  .makefile  := build/configure-build.mk
+  .makefile-vars := configure-flags='$(gnu-sed.configure-flags)'
   .build-sandbox := sed expr rm ls mv cp mkdir touch cat sort chmod \
                     tr awk uniq grep uname sleep make cc as ld ar bash \
                     basename rmdir ln

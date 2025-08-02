@@ -17,16 +17,23 @@ include $(ldv-root)/pkg/gnu/m4/import.mk
 include $(ldv-root)/pkg/gnu/autoconf/import.mk
 include $(ldv-root)/pkg/github/perl/import.mk
 
+gnu-automake.configure-flags ?= \
+   CFLAGS="-O2 -Wno-compound-token-split-by-macro -Wno-constant-logical-operand" \
+   --disable-dependency-tracking \
+   --disable-silent-rules \
+   --disable-ltdl-install
+
 define gnu-automake-descr
   .name      := gnu-automake-$(gnu-automake-version)
   .version   := $(gnu-automake-version)
   .repo-type := gnu
   .repo-name := automake
   .deps      := $(call gnu-autoconf.f-pkg) $(call gnu-sed.f-pkg) $(call perl.f-pkg)
-  .makefile  := pkg/gnu/automake/build.mk
-  .makefile-vars :=
+  .makefile  := build/configure-build.mk
+  .makefile-vars := configure-flags='$(gnu-automake.configure-flags)'
   .build-sandbox := bash expr chmod rm ls cat sort mkdir \
-                    date uname grep awk tr mv make basename cp find
+                    date uname grep awk tr mv make basename cp find \
+                    xargs id
   .env-path  := bin
 endef
 

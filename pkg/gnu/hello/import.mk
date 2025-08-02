@@ -14,6 +14,13 @@ include $(ldv-root)/ldv-bin.mk
 
 include $(ldv-root)/pkg/gnu/sed/import.mk
 
+gnu-hello.configure-flags ?= \
+    CFLAGS="-O2" \
+    --disable-dependency-tracking \
+    --without-libintl-prefix  \
+    --without-libiconv-prefix
+
+
 define gnu-hello-descr
   .name      := gnu-hello-$(gnu-hello-version)
   .version   := $(gnu-hello-version)
@@ -21,6 +28,7 @@ define gnu-hello-descr
   .repo-name := hello
   .deps      := $(call gnu-sed.f-pkg)
   .makefile  := pkg/gnu/hello/build.mk
+  .makefile-vars := configure-flags='$(gnu-hello.configure-flags)'
   .build-sandbox := expr rm ls mv cp mkdir touch cat sort chmod \
                     tr awk uniq grep uname sleep make cc ld ar as \
                     bash basename rmdir ln

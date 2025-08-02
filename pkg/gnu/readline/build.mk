@@ -1,12 +1,12 @@
 # SPDX-License-Identifier: MIT
 #
-# Build of hello
+# Build of readline
+# readlines wants cleared MFLAGS so it has custom build
 #
 
 export SHELL=bash
 
 build:
-	chmod a+x ./build-aux/install-sh
 	./configure --prefix $(ldv-install-prefix) $(configure-flags)
-	make
+	MFLAGS= MAKEFLAGS= make
 	make install

@@ -14,13 +14,17 @@ include $(ldv-root)/ldv-bin.mk
 
 include $(ldv-root)/pkg/github/perl/import.mk
 
+gnu-help2man.configure-flags ?= \
+   CFLAGS=-O2
+
 define gnu-help2man-descr
   .name      := gnu-help2man-$(gnu-help2man-version)
   .version   := $(gnu-help2man-version)
   .repo-type := gnu
   .repo-name := help2man
   .deps      := $(call perl.f-pkg)
-  .makefile  := pkg/gnu/help2man/build.mk
+  .makefile  := build/configure-build.mk
+  .makefile-vars := configure-flags=$(gnu-help2man.configure-flags)
   .build-sandbox := bash sed expr rm ls cat sort cc grep mv chmod \
                     mkdir tr awk make basename cp
   .env-path  := bin

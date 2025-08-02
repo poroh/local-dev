@@ -1,12 +1,14 @@
 # SPDX-License-Identifier: MIT
 #
-# Build of hello
+# Default build for packages with
+# ./configure
+# make
+# make install
 #
 
 export SHELL=bash
 
 build:
-	chmod a+x ./build-aux/install-sh
 	./configure --prefix $(ldv-install-prefix) $(configure-flags)
 	make
 	make install

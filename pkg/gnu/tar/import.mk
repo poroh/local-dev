@@ -15,14 +15,21 @@ include $(ldv-root)/ldv-bin.mk
 include $(ldv-root)/pkg/gnu/sed/import.mk
 include $(ldv-root)/pkg/gnu/libiconv/import.mk
 
+gnu-tar.configure-flags = \
+	CFLAGS="-O2 -I$(call gnu-libiconv.f-prefix)/include" \
+        LDFLAGS="-L$(call gnu-libiconv.f-prefix)/lib -liconv" \
+        --disable-dependency-tracking \
+        --disable-silent-rules \
+        --with-libiconv-prefix=$(call gnu-libiconv.f-prefix) 
+
 define gnu-tar-descr
   .name      := gnu-tar-$(gnu-tar-version)
   .version   := $(gnu-tar-version)
   .repo-type := gnu
   .repo-name := tar
   .deps      := $(call gnu-sed.f-pkg) $(call gnu-libiconv.f-pkg)
-  .makefile  := pkg/gnu/tar/build.mk
-  .makefile-vars := libiconv-prefix=$(call gnu-libiconv.f-prefix)
+  .makefile  := build/configure-build.mk
+  .makefile-vars := configure-flags='$(gnu-tar.configure-flags)'
   .build-sandbox := bash ln expr chmod rm ls sort printf cat cc as ar ld \
                     grep mv uname mkdir cp touch tr awk id make  \
                     sleep uniq hexdump wc basename

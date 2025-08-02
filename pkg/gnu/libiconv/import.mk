@@ -14,6 +14,11 @@ include $(ldv-root)/ldv-bin.mk
 
 include $(ldv-root)/pkg/gnu/sed/import.mk
 
+gnu-libiconv.configure-flags ?= \
+    CFLAGS="-O2 -Wno-parentheses-equality" \
+    --disable-dependency-tracking \
+    --without-libintl-prefix
+
 define gnu-libiconv-descr
   .name      := gnu-libiconv-$(gnu-libiconv-version)
   .version   := $(gnu-libiconv-version)
@@ -21,6 +26,7 @@ define gnu-libiconv-descr
   .repo-name := libiconv
   .deps      := $(call gnu-sed.f-pkg)
   .makefile  := pkg/gnu/libiconv/build.mk
+  .makefile-vars := configure-flags='$(gnu-libiconv.configure-flags)'
   .build-sandbox := expr rm ls mv cp mkdir touch cat sort chmod \
                     tr awk uniq grep uname sleep make cc as ld ar bash \
                     basename rmdir \
