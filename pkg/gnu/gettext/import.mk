@@ -24,7 +24,8 @@ gnu-gettext.configure-flags ?= \
     --disable-modula2 \
     --enable-fast-install \
     --disable-d \
-    --disable-java
+    --disable-java \
+    --config-cache
 
 define gnu-gettext-descr
   .name      := gnu-gettext-$(gnu-gettext-version)
@@ -33,7 +34,7 @@ define gnu-gettext-descr
   .repo-name := gettext
   .deps      := $(call gnu-sed.f-pkg) $(call gnu-libiconv.f-pkg)
   .makefile  := build/configure-build.mk
-  .makefile-vars := libiconv-prefix=$(call gnu-libiconv.f-prefix)
+  .makefile-vars := configure-flags='$(gnu-gettext.configure-flags)'
   .build-sandbox := bash expr chmod rm ls cat sort mkdir \
                     date uname grep awk tr mv make basename cp find \
                     cc rmdir id touch xargs ln wc uniq ar nm sh gzip \
