@@ -14,6 +14,7 @@ include $(ldv-root)/ldv-debug.mk
 include $(ldv-root)/ldv-bin.mk
 include $(ldv-root)/ldv-sandbox.mk
 include $(ldv-root)/ldv-tools.mk
+include $(ldv-root)/pkg/ldv-subst.mk
 
 $(call ldv-bin.f-required,touch)
 $(call ldv-bin.f-required,mkdir)
@@ -33,10 +34,15 @@ define ldv-pkg-f-define
     $(call ldv-vars.f-clear,$(ldv-pkg..all-vars))
     $($1)
     .makefile-vars ?=
+    .build-sandbox ?=
+    .deps ?=
+    .tools ?=
   )
   $(eval
     # Check that .name is defined
     $(call ldv-vars.f-must-not-empty,.name)
+    # For each tool in .tools classify it between sandbox or dependency
+    $(foreach t,$(.tools),$(call ldv-bin.f-available,$t,.build-sandbox += $t,$(call ldv-pkg..f-add-deps,$t,.deps,$1)))
     # Copy all variables to variables to ldv-pkg..pkg-
     $(foreach v,$(ldv-pkg..all-vars),$(eval
          ldv-pkg..vars$v@$(.name) := $($(v))
@@ -75,13 +81,15 @@ define ldv-pkg-f-define
          $(foreach v,$(ldv-pkg..all-vars),$(v)=$($(v))), \
          $(call ldv-fetch.f-dep,ldv-pkg..download@$(.name)) \
             $(ldv-pkg..build-env-dep@$(.name)) \
-            $(foreach p,$(.deps),ldv-pkg..dep-$p))
+            $(foreach p,$(.deps),ldv-pkg..dep-$p) \
+            $(call ldv-sandbox.f-dep,ldv-pkg..extract-tar-gz))
     ldv-dep..ldv-build-vars@$(.name) := ldv-install-prefix=$(call ldv-pkg.f-prefix,$(.name)) $(if $(.makefile-vars),$(.makefile-vars))
     # restore all variables
     $(call ldv-vars.f-restore,ldv-pkg,$(ldv-pkg..all-vars)))
 endef # ldv-pkg-f-define
 
 ldv-pkg.f-prefix = $(ldv-tools-pwd)/$(call ldv-pkg..f-dir,$1)/install$(call ldv-vars.f-must-not-empty,ldv-pkg..vars.name@$1,Package $1 is not defined)
+ldv-pkg.f-dep = $(call ldv-dep.f-target,ldv-pkg..dep-$1)
 
 # ================================================================================
 # Implementation
@@ -91,7 +99,7 @@ $(call ldv-sandbox.f-define,ldv-pkg..extract-tar-gz,tar gzip)
 # All defined packages
 ldv-pkg..all-pkgs :=
 
-ldv-pkg..all-vars := .name .version .repo-type .repo-name .deps .makefile .makefile-vars .build-sandbox .env-path
+ldv-pkg..all-vars := .name .version .repo-type .repo-name .deps .makefile .makefile-vars .build-sandbox .env-path .tools
 
 ldv-pkg..f-dir = $(ldv-pkg.base-path)/$1-$(call ldv-dep.f-sha,ldv-pkg..dep-$1)
 
@@ -123,6 +131,12 @@ $(call ldv-dep.f-target,ldv-pkg..dep-$1): $(call ldv-dep.f-prereq,ldv-pkg..dep-$
 	$(ldv-pkg..build-env@$1)$(call ldv-bin.f-exec,make) -f $(ldv-root)/$(ldv-pkg..vars.makefile@$1) -C $(call ldv-pkg..f-dir,$1)/src $(ldv-dep..ldv-build-vars@$1)
 	$(call ldv-dep.f-touch,$$@)
 
+endef
+
+define ldv-pkg..f-add-deps
+  include $$(call ldv-subst.f-path,$1)
+  $2 += $$(call ldv-subst.f-pkg,$1)
+  $$(info 🚀 Package for $1 will be built required by $3)
 endef
 
 $(call ldv-mod-provide,ldv-pkg,ldv-pkg..f-rules)

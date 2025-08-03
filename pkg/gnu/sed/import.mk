@@ -13,7 +13,7 @@ include $(ldv-root)/ldv-pkg.mk
 include $(ldv-root)/ldv-bin.mk
 
 gnu-sed.configure-flags ?= \
-   CFLAGS="-O2"
+   CFLAGS="-O2 -Wno-deprecated-non-prototype"
 
 define gnu-sed-descr
   .name      := $(call gnu-sed.f-pkg,$(gnu-sed-version))

@@ -15,7 +15,7 @@ $(call ldv-bin.f-required,rm)
 
 $(call ldv-bin.f-seal)
 
-all: $(ldv-dep.all)
+all: $(call postgres.f-dep)
 
 clean:
 	$(call ldv-bin.f-exec,rm) -rf $(ldv-base-path)

@@ -23,16 +23,21 @@ $(call ldv-tools.f-require-make-version,4,0)
 # $(call ldv-bin.f-required,sha256sum)
 #
 define ldv-bin.f-required
-  $(eval $(call ldv-bin..f-required-1,$1))
+  $(eval $(call ldv-bin..f-set-vars,$1))
   $(eval $(call ldv-bin..f-required-2,$1))
 endef
 
 ldv-bin.f-exec = $(call ldv-vars.f-get,ldv-bin..path-$1,Binary for $1 is not defined)
 ldv-bin.f-seal = $(eval $(call ldv-bin..seal))
 
+define ldv-bin.f-available
+  $(eval $(call ldv-bin..f-set-vars,$1))
+  $(eval $(if $(ldv-bin..path-$1),$(eval $2),$(eval $3)))
+endef
+
 # ================================================================================
 # Implementation
-define ldv-bin..f-required-1
+define ldv-bin..f-set-vars
   ldv-bin..path-$1 := $(shell which $1)
 endef
 
