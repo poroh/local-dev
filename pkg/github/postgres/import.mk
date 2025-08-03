@@ -12,6 +12,7 @@ postgres..included-$(postgres-version) := 1
 include $(ldv-root)/ldv-pkg.mk
 include $(ldv-root)/ldv-bin.mk
 include $(ldv-root)/ldv-tools.mk
+include $(ldv-root)/ldv-c-toolchain.mk
 
 include $(ldv-root)/pkg/gnu/readline/import.mk
 include $(ldv-root)/pkg/zlib/import.mk
@@ -37,8 +38,9 @@ define postgres-descr
   .deps      := $(postgres..deps)
   .makefile  := build/configure-build.mk
   .makefile-vars  := configure-flags='$(postgres.configure-flags)' make-env='$(postgres.make-env) '
-  .tools     := bash sed expr rm ls cat sort uname cc grep mv \
-                awk make chmod mkdir cp tr touch sh ar wc \
+  .tools     := $(ldv-c-toolchain.tools) \
+                bash sed expr rm ls cat sort uname grep mv \
+                awk make chmod mkdir cp tr touch sh wc \
                 basename bison perl flex
   .env-path  := bin
 endef

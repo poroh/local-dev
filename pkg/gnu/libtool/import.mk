@@ -11,6 +11,7 @@ gnu-libtool..included-$(gnu-libtool-version) := 1
 
 include $(ldv-root)/ldv-pkg.mk
 include $(ldv-root)/ldv-bin.mk
+include $(ldv-root)/ldv-c-toolchain.mk
 
 include $(ldv-root)/pkg/gnu/sed/import.mk
 include $(ldv-root)/pkg/gnu/m4/import.mk
@@ -29,9 +30,10 @@ define gnu-libtool-descr
   .deps      := $(call gnu-m4.f-pkg) $(call gnu-sed.f-pkg)
   .makefile  := build/configure-build.mk
   .makefile-vars := configure-flags='$(gnu-libtool.configure-flags)'
-  .build-sandbox := bash expr chmod rm ls cat make sort \
-                    xargs echo mkdir date uname cc mv grep awk \
-                    tr wc cp ar sleep rmdir env ln find ld basename \
+  .build-sandbox := $(ldv-c-toolchain.tools) \
+                    bash expr chmod rm ls cat make sort \
+                    xargs echo mkdir date uname mv grep awk \
+                    tr wc cp sleep rmdir env ln find basename \
                     dirname
   .env-path  := bin
 endef

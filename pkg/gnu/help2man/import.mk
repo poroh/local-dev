@@ -11,6 +11,7 @@ gnu-help2man..included-$(gnu-help2man-version) := 1
 
 include $(ldv-root)/ldv-pkg.mk
 include $(ldv-root)/ldv-bin.mk
+include $(ldv-root)/ldv-c-toolchain.mk
 
 include $(ldv-root)/pkg/github/perl/import.mk
 
@@ -25,7 +26,8 @@ define gnu-help2man-descr
   .deps      := $(call perl.f-pkg)
   .makefile  := build/configure-build.mk
   .makefile-vars := configure-flags=$(gnu-help2man.configure-flags)
-  .build-sandbox := bash sed expr rm ls cat sort cc grep mv chmod \
+  .build-sandbox := $(ldv-c-toolchain.tools) \
+                    bash sed expr rm ls cat sort grep mv chmod \
                     mkdir tr awk make basename cp
   .env-path  := bin
 endef

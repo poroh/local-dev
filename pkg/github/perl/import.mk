@@ -11,6 +11,7 @@ perl..included-$(perl-version) := 1
 
 include $(ldv-root)/ldv-pkg.mk
 include $(ldv-root)/ldv-bin.mk
+include $(ldv-root)/ldv-c-toolchain.mk
 
 define perl-descr
   .name      := perl-$(perl-version)
@@ -20,9 +21,9 @@ define perl-descr
   .deps      := 
   .makefile  := pkg/github/perl/build.mk
   .makefile-vars :=
-  # TODO: get rid of install_name_tool from deps
-  .build-sandbox := bash sh cat rm uname cc make sed touch chmod cp mv grep ranlib \
-                    mkdir install_name_tool
+  .build-sandbox := $(ldv-c-toolchain.tools) \
+                    bash sh cat rm uname make sed touch chmod cp mv grep \
+                    mkdir
   .env-path  := bin
 endef
 

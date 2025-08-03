@@ -11,6 +11,7 @@ gnu-texinfo..included-$(gnu-texinfo-version) := 1
 
 include $(ldv-root)/ldv-pkg.mk
 include $(ldv-root)/ldv-bin.mk
+include $(ldv-root)/ldv-c-toolchain.mk
 
 include $(ldv-root)/pkg/github/perl/import.mk
 
@@ -26,8 +27,9 @@ define gnu-texinfo-descr
   .deps      :=  $(call perl.f-pkg)
   .makefile  := build/configure-build.mk
   .makefile-vars := configure-flags='$(gnu-texinfo.configure-flags)'
-  .build-sandbox := sed expr rm ls mv cp mkdir touch cat sort chmod \
-                    tr awk uniq grep uname sleep make cc ld ar bash \
+  .build-sandbox := $(ldv-c-toolchain.tools) \
+                    sed expr rm ls mv cp mkdir touch cat sort chmod \
+                    tr awk uniq grep uname sleep make bash \
                     basename rmdir ln id xargs wc dirname
   .env-path  := bin
 endef

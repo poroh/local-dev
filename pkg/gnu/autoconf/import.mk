@@ -11,6 +11,7 @@ gnu-autoconf..included-$(gnu-autoconf-version) := 1
 
 include $(ldv-root)/ldv-pkg.mk
 include $(ldv-root)/ldv-bin.mk
+include $(ldv-root)/ldv-c-toolchain.mk
 
 include $(ldv-root)/pkg/gnu/sed/import.mk
 include $(ldv-root)/pkg/gnu/m4/import.mk

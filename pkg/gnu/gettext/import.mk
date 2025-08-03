@@ -11,6 +11,7 @@ gnu-gettext..included-$(gnu-gettext-version) := 1
 
 include $(ldv-root)/ldv-pkg.mk
 include $(ldv-root)/ldv-bin.mk
+include $(ldv-root)/ldv-c-toolchain.mk
 
 include $(ldv-root)/pkg/gnu/sed/import.mk
 include $(ldv-root)/pkg/gnu/libiconv/import.mk
@@ -35,9 +36,10 @@ define gnu-gettext-descr
   .deps      := $(call gnu-sed.f-pkg) $(call gnu-libiconv.f-pkg)
   .makefile  := build/configure-build.mk
   .makefile-vars := configure-flags='$(gnu-gettext.configure-flags)'
-  .build-sandbox := bash expr chmod rm ls cat sort mkdir \
+  .build-sandbox := $(ldv-c-toolchain.tools) \
+                    bash expr chmod rm ls cat sort mkdir \
                     date uname grep awk tr mv make basename cp find \
-                    cc rmdir id touch xargs ln wc uniq ar nm sh gzip \
+                    rmdir id touch xargs ln wc uniq nm sh gzip \
                     tar dirname cmp
   .env-path  := bin
 endef

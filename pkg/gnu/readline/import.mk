@@ -12,6 +12,7 @@ gnu-readline..included-$(gnu-readline-version) := 1
 include $(ldv-root)/ldv-pkg.mk
 include $(ldv-root)/ldv-bin.mk
 include $(ldv-root)/ldv-tools.mk
+include $(ldv-root)/ldv-c-toolchain.mk
 
 include $(ldv-root)/pkg/gnu/ncurses/import.mk
 
@@ -31,9 +32,10 @@ define gnu-readline-descr
   .deps      := $(call gnu-ncurses.f-pkg)
   .makefile  := build/configure-build.mk
   .makefile-vars := configure-flags='$(gnu-readline.configure-flags)' make-env='$(gnu-readline.make-env) '
-  .build-sandbox := bash expr chmod rm ls cat make sort sed \
-                    xargs echo mkdir date uname cc mv grep awk \
-                    tr wc cp ar sleep rmdir env ln find ld basename \
+  .build-sandbox := $(ldv-c-toolchain.tools) \
+                    bash expr chmod rm ls cat make sort sed \
+                    xargs echo mkdir date uname mv grep awk \
+                    tr wc cp sleep rmdir env ln find basename \
                     dirname
   .env-path  := bin
 endef

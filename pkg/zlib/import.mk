@@ -11,6 +11,7 @@ zlib..included-$(zlib-version) := 1
 
 include $(ldv-root)/ldv-pkg.mk
 include $(ldv-root)/ldv-bin.mk
+include $(ldv-root)/ldv-c-toolchain.mk
 
 zlib.configure-flags ?= --static
 
@@ -22,8 +23,9 @@ define zlib-descr
   .deps      := $(call gnu-ncurses.f-pkg)
   .makefile  := build/configure-build.mk
   .makefile-vars := configure-flags='$(zlib.configure-flags)'
-  .build-sandbox := bash expr date dirname tee sed rm \
-                    make cc sh cat cp mv mkdir ar ln chmod
+  .build-sandbox := $(ldv-c-toolchain.tools) \
+                    bash expr date dirname tee sed rm \
+                    make sh cat cp mv mkdir ln chmod
   .env-path  := bin
 endef
 

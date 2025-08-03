@@ -11,6 +11,7 @@ flex..included-$(flex-version) := 1
 
 include $(ldv-root)/ldv-pkg.mk
 include $(ldv-root)/ldv-bin.mk
+include $(ldv-root)/ldv-c-toolchain.mk
 
 gnu-autoconf-version := 2.65
 gnu-automake-version := 1.18
@@ -38,9 +39,10 @@ define flex-descr
   .makefile  := pkg/github/flex/build.mk
   .makefile-vars := autoconf-bin=$(call gnu-autoconf.f-exec) automake-bin=$(call gnu-automake.f-exec)
   # TODO: get rid of flex from deps
-  .build-sandbox := bash sh env which ln date cat touch grep wc \
-                    mkdir gzip tar find rm rmdir mv sort cp expr chmod ls cc \
-                    uname awk make tr ar cmp id dirname basename xargs head \
+  .build-sandbox := $(ldv-c-toolchain.tools) \
+                    bash sh env which ln date cat touch grep wc \
+                    mkdir gzip tar find rm rmdir mv sort cp expr chmod ls \
+                    uname awk make tr cmp id dirname basename xargs head \
                     flex
   .env-path  := bin
 endef

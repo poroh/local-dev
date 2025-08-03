@@ -11,6 +11,7 @@ gnu-hello..included-$(gnu-hello-version) := 1
 
 include $(ldv-root)/ldv-pkg.mk
 include $(ldv-root)/ldv-bin.mk
+include $(ldv-root)/ldv-c-toolchain.mk
 
 include $(ldv-root)/pkg/gnu/sed/import.mk
 
@@ -29,8 +30,9 @@ define gnu-hello-descr
   .deps      := $(call gnu-sed.f-pkg)
   .makefile  := pkg/gnu/hello/build.mk
   .makefile-vars := configure-flags='$(gnu-hello.configure-flags)'
-  .build-sandbox := expr rm ls mv cp mkdir touch cat sort chmod \
-                    tr awk uniq grep uname sleep make cc ld ar as \
+  .build-sandbox := $(ldv-c-toolchain.tools) \
+                    expr rm ls mv cp mkdir touch cat sort chmod \
+                    tr awk uniq grep uname sleep make \
                     bash basename rmdir ln
   .env-path  := bin
 endef
