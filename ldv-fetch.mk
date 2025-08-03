@@ -29,18 +29,18 @@ define ldv-fetch.f_define
     $(call ldv-debug.f-info,ldv-fetch: defining variables for $(.name))
     # Copy all variables to variables
     $(foreach v,$(ldv-fetch..all-vars),$(eval
-         ldv-fetch..vars$v@$(.name) := $($(v))
+         ldv-fetch..[$(.name)].vars$v:= $($(v))
       ))
     # Append package to list of all packages
     ldv-fetch..all += $(.name)
     # Define dependencies
-    $(call ldv-dep.f-define,ldv-fetch..dep@$(.name),$(foreach v,$(ldv-fetch..all-vars),$($(v))),)
+    $(call ldv-dep.f-define,ldv-fetch..[$(.name)].dep,$(foreach v,$(ldv-fetch..all-vars),$($(v))),)
     # unset all variables
     $(call ldv-vars.f-restore,ldv-fetch,$(ldv-fetch..all-vars)))
 endef
 
 ldv-fetch.f-name = $(call ldv-fetch..f-destination,$1)
-ldv-fetch.f-dep = ldv-fetch..dep@$1
+ldv-fetch.f-dep = ldv-fetch..[$1].dep
 
 # ================================================================================
 # Implementation
@@ -60,14 +60,14 @@ $(ldv-fetch..downloads-dir-dep):
 $(foreach s,$(ldv-fetch..all),$(eval $(call ldv-fetch..f-one-rule,$(s))))
 endef
 
-ldv-fetch..f-destination = $(ldv-fetch.downloads)/$1-$(call ldv-dep.f-sha,ldv-fetch..dep@$1).$(ldv-fetch..vars.target-ext@$1)
+ldv-fetch..f-destination = $(ldv-fetch.downloads)/$1-$(call ldv-dep.f-sha,ldv-fetch..[$1].dep).$(ldv-fetch..[$1].vars.target-ext)
 ldv-fetch..f-download-curl = $(call ldv-curl.f-download,$1,$2)
 
 define ldv-fetch..f-one-rule
 $(call ldv-debug.f-info,Define fetch package $1)
 
-$(call ldv-dep.f-target,ldv-fetch..dep@$1): $(ldv-fetch..downloads-dir-dep) $(call ldv-dep.f-prereq,ldv-fetch..dep@$1)
-	$(call ldv-fetch..f-download-$(ldv-fetch..vars.method@$1),$(ldv-fetch..vars.source@$1),$(call ldv-fetch..f-destination,$1))
+$(call ldv-dep.f-target,ldv-fetch..[$1].dep): $(ldv-fetch..downloads-dir-dep) $(call ldv-dep.f-prereq,ldv-fetch..[$1].dep)
+	$(call ldv-fetch..f-download-$(ldv-fetch..[$1].vars.method),$(ldv-fetch..[$1].vars.source),$(call ldv-fetch..f-destination,$1))
 	$(call ldv-dep.f-touch,$$@)
 
 endef
