@@ -32,7 +32,7 @@ ldv-tools.f-require-make-version = $(if $(call ldv-tools.f-intcmp,$(ldv-tools-ma
 # Join strings
 # $1 - sep
 # $2 - list of strings
-ldv-tooks.f-join = $(subst $(ldv-tools-chr-sp),$1,$(strip $2))
+ldv-tools.f-join = $(subst $(ldv-tools-chr-sp),$1,$(strip $2))
 
 ldv-tools.f-get-j = $(filter -j%,$1)
 

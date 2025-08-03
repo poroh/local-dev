@@ -17,6 +17,7 @@ $(call ldv-bin.f-required,mkdir)
 $(call ldv-bin.f-required,rm)
 
 ldv-dep.base-path = $(ldv-base-path)/dep
+ldv-dep.keep-old ?= 1
 
 # ================================================================================
 # Interface
@@ -64,7 +65,8 @@ $(ldv-dep..root):
 	$(call ldv-bin.f-exec,mkdir) -p $(ldv-dep.base-path)
 	$(call ldv-bin.f-exec,touch) $$@
 
-$(foreach d,$(filter-out $(ldv-dep.all),$(wildcard $(ldv-dep.base-path)/*.ldv-dep)),$(shell $(call ldv-bin.f-exec,rm) $d))
+
+$(if $(ldv-dep.keep-old),,$(foreach d,$(filter-out $(ldv-dep.all),$(wildcard $(ldv-dep.base-path)/*.ldv-dep)),$(shell $(call ldv-bin.f-exec,rm) $d)))
 
 endef
 

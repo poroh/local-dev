@@ -29,8 +29,7 @@ define gnu-libiconv-descr
   .makefile-vars := configure-flags='$(gnu-libiconv.configure-flags)'
   .build-sandbox := expr rm ls mv cp mkdir touch cat sort chmod \
                     tr awk uniq grep uname sleep make cc as ld ar bash \
-                    basename rmdir \
-                    ln wc dirname
+                    basename rmdir ln wc dirname xargs
   .env-path  := bin
 endef
 

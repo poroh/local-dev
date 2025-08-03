@@ -15,7 +15,7 @@ include $(ldv-root)/ldv-bin.mk
 include $(ldv-root)/pkg/gnu/sed/import.mk
 
 gnu-hello.configure-flags ?= \
-    CFLAGS="-O2" \
+    CFLAGS="-O2 -Wno-expansion-to-defined" \
     --disable-dependency-tracking \
     --without-libintl-prefix  \
     --without-libiconv-prefix
