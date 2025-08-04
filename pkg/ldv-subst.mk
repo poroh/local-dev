@@ -16,3 +16,6 @@ ldv-subst..flex.f-pkg = flex.f-pkg
 
 ldv-subst..perl.path = github/perl/import.mk
 ldv-subst..perl.f-pkg = perl.f-pkg
+
+ldv-subst..pod2man.path = github/perl/import.mk
+ldv-subst..pod2man.f-pkg = perl.f-pkg
