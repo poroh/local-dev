@@ -35,7 +35,8 @@ postgres..ld-flags := $(call gnu-readline.f-ldflags) \
                       $(call openssl.f-ldflags)
 
 postgres.configure-flags = \
-     CPPFLAGS="-O2 $(postgres..c-flags)" \
+     CPPFLAGS="$(postgres..cpp-flags)" \
+     CFLAGS="-O2" \
      LDFLAGS="$(postgres..ld-flags)" \
      --without-icu \
      --with-uuid=e2fs \

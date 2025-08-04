@@ -17,7 +17,8 @@ include $(ldv-root)/pkg/gnu/sed/import.mk
 include $(ldv-root)/pkg/gnu/libiconv/import.mk
 
 gnu-tar.configure-flags = \
-	CFLAGS="-O2 -I$(call gnu-libiconv.f-prefix)/include" \
+        CPPFLAGS="-I$(call gnu-libiconv.f-prefix)/include" \
+	CFLAGS="-O2" \
         LDFLAGS="-L$(call gnu-libiconv.f-prefix)/lib -liconv" \
         --disable-dependency-tracking \
         --disable-silent-rules \

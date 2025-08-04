@@ -16,7 +16,7 @@ include $(ldv-root)/ldv-c-toolchain.mk
 include $(ldv-root)/pkg/gnu/sed/import.mk
 
 gnu-m4.configure-flags ?= \
-    CFLAGS="-O3"
+    CFLAGS="-O2"
 
 define gnu-m4-descr
   .name      := gnu-m4-$(gnu-m4-version)
