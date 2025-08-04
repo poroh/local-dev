@@ -18,7 +18,7 @@ ldv-c-toolchain.tools = $(call ldv-vars.f-get,ldv-c-toolchain..$(ldv-uname.curre
 # Interface
 
 ldv-c-toolchain..darwin.tools = cc ar as ld install_name_tool ranlib
-ldv-c-toolchain..linux.tools = cc ar as ld
+ldv-c-toolchain..linux.tools = cc ar as ld cpp gcc
 
 
 endif

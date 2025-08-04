@@ -24,10 +24,10 @@ postgres..deps := $(call gnu-readline.f-pkg) \
                   $(call e2fsprogs-libuuid.f-pkg) \
                   $(call openssl.f-pkg)
 
-postgres..c-flags := $(call gnu-readline.f-cflags) \
-                     $(call zlib.f-cflags) \
-                     $(call e2fsprogs-libuuid.f-cflags) \
-                     $(call openssl.f-cflags)
+postgres..cpp-flags := $(call gnu-readline.f-cppflags) \
+                       $(call zlib.f-cppflags) \
+                       $(call e2fsprogs-libuuid.f-cppflags) \
+                       $(call openssl.f-cppflags)
 
 postgres..ld-flags := $(call gnu-readline.f-ldflags) \
                       $(call zlib.f-ldflags) \
@@ -35,7 +35,7 @@ postgres..ld-flags := $(call gnu-readline.f-ldflags) \
                       $(call openssl.f-ldflags)
 
 postgres.configure-flags = \
-     CFLAGS="-O2 $(postgres..c-flags)" \
+     CPPFLAGS="-O2 $(postgres..c-flags)" \
      LDFLAGS="$(postgres..ld-flags)" \
      --without-icu \
      --with-uuid=e2fs \

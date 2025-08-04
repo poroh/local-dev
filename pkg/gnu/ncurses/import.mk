@@ -43,6 +43,6 @@ $(call ldv-pkg-f-define,gnu-ncurses-descr)
 
 gnu-ncurses.f-pkg = gnu-ncurses-$(if $1,$1,$(gnu-ncurses-version))
 gnu-ncurses.f-ldflags = -L$(call ldv-pkg.f-prefix,gnu-ncurses-$(if $1,$1,$(gnu-ncurses-version)))/lib
-gnu-ncurses.f-cflags = -I$(call ldv-pkg.f-prefix,gnu-ncurses-$(if $1,$1,$(gnu-ncurses-version)))/include
+gnu-ncurses.f-cppflags = -I$(call ldv-pkg.f-prefix,gnu-ncurses-$(if $1,$1,$(gnu-ncurses-version)))/include
 
 endif

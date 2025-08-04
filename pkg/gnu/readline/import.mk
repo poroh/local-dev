@@ -17,7 +17,8 @@ include $(ldv-root)/ldv-c-toolchain.mk
 include $(ldv-root)/pkg/gnu/ncurses/import.mk
 
 gnu-readline.configure-flags = \
-        CFLAGS="-O2 -Wno-parentheses $(call gnu-ncurses.f-cflags)" \
+        CPPFLAGS="$(call gnu-ncurses.f-cppflags)" \
+        CFLAGS="-O2 -Wno-parentheses" \
         LDFLAGS="$(call gnu-ncurses.f-ldflags)"
 
 gnu-readline.make-env = \
@@ -43,7 +44,7 @@ endef
 $(call ldv-pkg-f-define,gnu-readline-descr)
 
 gnu-readline.f-pkg = gnu-readline-$(if $1,$1,$(gnu-readline-version))
-gnu-readline.f-cflags = -I$(call ldv-pkg.f-prefix,gnu-readline-$(if $1,$1,$(gnu-readline-version)))/include
+gnu-readline.f-cppflags = -I$(call ldv-pkg.f-prefix,gnu-readline-$(if $1,$1,$(gnu-readline-version)))/include
 gnu-readline.f-ldflags = -L$(call ldv-pkg.f-prefix,gnu-readline-$(if $1,$1,$(gnu-readline-version)))/lib
 
 endif

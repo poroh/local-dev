@@ -42,7 +42,7 @@ define e2fsprogs-libuuid-descr
   .build-sandbox := $(ldv-c-toolchain.tools) \
                     sh sed expr rm ls cat sort awk \
                     mv grep uname chmod cp uniq dirname \
-                    mkdir tr make touch ln
+                    mkdir tr make touch ln true
   .env-path  := bin
 endef
 
@@ -50,6 +50,6 @@ $(call ldv-pkg-f-define,e2fsprogs-libuuid-descr)
 
 e2fsprogs-libuuid.f-pkg = e2fsprogs-libuuid-$(if $1,$1,$(e2fsprogs-libuuid-version))
 e2fsprogs-libuuid.f-ldflags = -L$(call ldv-pkg.f-prefix,e2fsprogs-libuuid-$(if $1,$1,$(e2fsprogs-libuuid-version)))/lib
-e2fsprogs-libuuid.f-cflags = -I$(call ldv-pkg.f-prefix,e2fsprogs-libuuid-$(if $1,$1,$(e2fsprogs-libuuid-version)))/include
+e2fsprogs-libuuid.f-cppflags = -I$(call ldv-pkg.f-prefix,e2fsprogs-libuuid-$(if $1,$1,$(e2fsprogs-libuuid-version)))/include
 
 endif

@@ -6,6 +6,6 @@
 export SHELL=bash
 
 build:
-	./configure --prefix=$(ldv-install-prefix) --openssldir=$(ldv-install-prefix) 
+	./Configure --prefix=$(ldv-install-prefix) --openssldir=$(ldv-install-prefix) 
 	make
 	make install

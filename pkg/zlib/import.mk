@@ -33,7 +33,7 @@ $(call ldv-pkg-f-define,zlib-descr)
 
 zlib.f-pkg = zlib-$(if $1,$1,$(zlib-version))
 zlib.f-prefix = $(call ldv-pkg.f-prefix,zlib-$(if $1,$1,$(zlib-version)))
-zlib.f-cflags = -I$(call zlib.f-prefix,$1)/include
+zlib.f-cppflags = -I$(call zlib.f-prefix,$1)/include
 zlib.f-ldflags = -L$(call zlib.f-prefix,$1)/lib
 
 endif

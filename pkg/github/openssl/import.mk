@@ -22,7 +22,8 @@ define openssl-descr
   .makefile  := pkg/github/openssl/build.mk
   .makefile-vars := configure-flags='$(openssl.configure-flags)'
   .tools := $(ldv-c-toolchain.tools) \
-            perl bash sh touch mv make rm chmod ln cut basename cp
+            perl bash sh touch mv make rm chmod ln cut basename cp \
+            pod2man
   .env-path  := bin
 endef
 
@@ -30,6 +31,6 @@ $(call ldv-pkg-f-define,openssl-descr)
 
 openssl.f-pkg = openssl-$(if $1,$1,$(openssl-version))
 openssl.f-ldflags = -L$(call ldv-pkg.f-prefix,openssl-$(if $1,$1,$(openssl-version)))/lib
-openssl.f-cflags = -I$(call ldv-pkg.f-prefix,openssl-$(if $1,$1,$(openssl-version)))/include
+openssl.f-cppflags = -I$(call ldv-pkg.f-prefix,openssl-$(if $1,$1,$(openssl-version)))/include
 
 endif
