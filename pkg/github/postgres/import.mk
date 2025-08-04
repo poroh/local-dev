@@ -16,14 +16,31 @@ include $(ldv-root)/ldv-c-toolchain.mk
 
 include $(ldv-root)/pkg/gnu/readline/import.mk
 include $(ldv-root)/pkg/zlib/import.mk
+include $(ldv-root)/pkg/kernel.org/e2fsprogs/libuuid.mk
+include $(ldv-root)/pkg/github/openssl/import.mk
 
 postgres..deps := $(call gnu-readline.f-pkg) \
-                  $(call zlib.f-pkg)
+                  $(call zlib.f-pkg) \
+                  $(call e2fsprogs-libuuid.f-pkg) \
+                  $(call openssl.f-pkg)
+
+postgres..c-flags := $(call gnu-readline.f-cflags) \
+                     $(call zlib.f-cflags) \
+                     $(call e2fsprogs-libuuid.f-cflags) \
+                     $(call openssl.f-cflags)
+
+postgres..ld-flags := $(call gnu-readline.f-ldflags) \
+                      $(call zlib.f-ldflags) \
+                      $(call e2fsprogs-libuuid.f-ldflags) \
+                      $(call openssl.f-ldflags)
 
 postgres.configure-flags = \
-     CFLAGS="-O2 $(call gnu-readline.f-cflags) $(call zlib.f-cflags)" \
-     LDFLAGS="$(call gnu-readline.f-ldflags) $(call zlib.f-ldflags)" \
+     CFLAGS="-O2 $(postgres..c-flags)" \
+     LDFLAGS="$(postgres..ld-flags)" \
      --without-icu \
+     --with-uuid=e2fs \
+     --with-openssl \
+     --with-zlib
 
 postgres.make-env = \
      MFLAGS="$(call ldv-tools.f-get-j,$(MFLAGS))" \
